@@ -1,0 +1,26 @@
+<div class="drag-and-drop-box" color="warn">
+    <mat-divider></mat-divider>
+    <section>
+      <div class="example-label">Upload image</div>
+      <div class="example-button-row">
+        <div class="example-flex-container">
+          <div class="example-button-container">
+            <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onClick()">
+                <span class="material-icons">
+                    add
+                </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="isVisible">
+        <ngx-dropzone (change)="onSelect($event)">
+            <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+            <ngx-dropzone-preview [removable]="true">
+              <ngx-dropzone-label>drop file</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </ngx-dropzone>
+    </div>
+</div>
