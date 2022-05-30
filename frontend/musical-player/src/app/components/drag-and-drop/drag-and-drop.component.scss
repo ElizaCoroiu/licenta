@@ -1,4 +1,3 @@
-
 .drag-and-drop-button-container {
   padding: 10px;
 }
@@ -7,6 +6,12 @@
   color: white;
   font-size: 30px;
   margin-top: -10px;
+}
+
+.upload-label {
+  color: #fff;
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
 ngx-dropzone {
@@ -24,8 +29,8 @@ ngx-dropzone ngx-dropzone-preview {
 }
 
 div.drag-and-drop-container {
-  margin: 50px;
-  max-width: 400px;
+  margin-top: 300px;
+  width: 100%;
 
   mat-card.basic-card {
     background-color: palevioletred;

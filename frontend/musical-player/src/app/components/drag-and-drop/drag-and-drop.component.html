@@ -1,6 +1,6 @@
 <div class="drag-and-drop-container">
-    <section>
-      <div class="example-label">Upload image</div>
+  <div fxLayout="column" fxLayoutAlign="space-around center" >
+      <div class="upload-label">upload image</div>
       <div class="example-button-row">
           <div class="drag-and-drop-button-container">
             <button mat-fab color="warn" (click)="onClick()">
@@ -10,17 +10,17 @@
             </button>
           </div>
       </div>
-    </section>
+  </div>
 
-    <div *ngIf="isVisible" class="drag-and-drop-container">
-      <mat-card class="basic-card mat-elevation-z24">
-        <mat-card-content>
-          <ngx-dropzone (change)="onSelect($event)" color="primary">
-              <ngx-dropzone-preview [removable]="true">
-                <ngx-dropzone-label>drop file</ngx-dropzone-label>
-              </ngx-dropzone-preview>
-          </ngx-dropzone>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div *ngIf="isVisible" class="drag-and-drop-container">
+    <mat-card class="basic-card mat-elevation-z24">
+      <mat-card-content>
+        <ngx-dropzone (change)="onSelect($event)">
+            <ngx-dropzone-preview [removable]="true">
+              <ngx-dropzone-label>drop file</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+        </ngx-dropzone>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

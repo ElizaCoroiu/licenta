@@ -1,8 +1,31 @@
-.example-spacer {
-  flex: 1 1 auto;
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Oleo Script', cursive;
+  color: #fff;
 }
 
-.mat-toolbar-row, .mat-toolbar-single-row {
-  height: 100px;
+.navbar {
+  height: 80px;
   width: 100% !important;
+}
+
+.navbar-divider {
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-color: rgb(122, 118, 118);
+}
+
+.menu-icon, .app-title {
+  font-size: 35px;
+}
+
+span {
+  margin-left: 10px;
+  font-size: 25px;
+}
+
+.design-icon {
+  margin-right: 10px;
+  font-size: 28px;
 }

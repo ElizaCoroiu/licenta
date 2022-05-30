@@ -1,13 +1,17 @@
-<mat-toolbar color="warn">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Music Player App</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar>
+<div class="navbar-container">
+  <div class="navbar" fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button>
+      <mat-icon class="menu-icon">menu</mat-icon>
+    </button>
+    <span class="app-title">Music Player App</span>
+  </div>
+  <div class="navbar" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-icon-button>
+      <mat-icon class="design-icon">favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="design-icon">
+      <mat-icon class="design-icon">share</mat-icon>
+    </button>
+  </div>
+</div>
+<mat-divider class="navbar-divider"></mat-divider>
