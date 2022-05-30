@@ -1,0 +1,5 @@
+@import '~@angular/material/theming';
+
+@mixin drag-and-drop-theme($theme) {                                
+       background-color: mat-color($warn);  
+}
