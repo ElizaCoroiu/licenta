@@ -9,6 +9,7 @@ import { MaterialModule } from './material/material.module';
 import { DragAndDropComponent } from './components/drag-and-drop/drag-and-drop.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MaterialModule,
     NgxDropzoneModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

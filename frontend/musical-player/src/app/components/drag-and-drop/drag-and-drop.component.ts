@@ -18,7 +18,7 @@ export class DragAndDropComponent implements OnInit {
   }
 
   onClick() {
-    this.isVisible = true;
+    this.isVisible = !this.isVisible;
   }
 
   onSelect(event: any){
