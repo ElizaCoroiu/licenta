@@ -1,4 +1,7 @@
 from typing import List
+
+import cv2
+
 from models.symbol import Symbol
 from models.potential_symbol import PotentialSymbol
 from models.frame import AlterationFrame
@@ -20,35 +23,35 @@ class Staff:
         self.line_five = Line()
 
         self.line_spacing = 0
+        self.image = None
 
     def remove_duplicates(self):
-        new_notes = []
-        prev_note = -1
+        new_symbols = []
+        prev_symbol = -1
         new_group = []
 
         for n in self.possible_symbols:
-            if prev_note == -1 or abs(n.x - prev_note) < 4:
+            if prev_symbol == -1 or abs(n.x - prev_symbol) < 4:
                 new_group.append(n)
             else:
                 if new_group:
-                    best_note = max(new_group, key=lambda x: x.probability)
+                    best_symbol = max(new_group, key=lambda x: x.probability)
                     new_group = [n]
                 else:
-                    best_note = n
+                    best_symbol = n
                     new_group = []
 
-                new_notes.append(best_note)
-            prev_note = n.x
+                new_symbols.append(best_symbol)
+            prev_symbol = n.x
         if new_group:
-            best_note = max(new_group, key=lambda x: x.probability)
-            new_notes.append(best_note)
-        self.possible_symbols = new_notes
+            best_symbol = max(new_group, key=lambda x: x.probability)
+            new_symbols.append(best_symbol)
+        self.possible_symbols = new_symbols
 
     def get_symbols_inside_staff(self, locations):
         current_staff_symbols = []
 
         for symbol in locations:
-
             if (self.line_one.y1 - self.line_spacing * 4) <= symbol.y <= (
                     self.line_five.y1 + self.line_spacing * 4):
                 current_staff_symbols.append(symbol)
@@ -92,25 +95,43 @@ class Staff:
                     if first_line_above_y < possible_symbol.y < self.line_one.y1 and \
                             abs(possible_symbol.y - first_line_above_y) > 3 and \
                             abs(self.line_one.y1 - possible_symbol.y) > 3:
+                        cv2.putText(img=self.image, text='F5', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "F5"
 
                     elif abs(first_line_above_y - possible_symbol.y) <= 3:
+                        cv2.putText(img=self.image, text='G5', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "G5"
 
                     elif second_line_above_y < possible_symbol.y < first_line_above_y and \
                             abs(possible_symbol.y - second_line_above_y) > 3 and \
                             abs(first_line_above_y - possible_symbol.y) > 3:
+                        cv2.putText(img=self.image, text='A5', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "A5"
 
                     elif abs(second_line_above_y - possible_symbol.y) <= 3:
+                        cv2.putText(img=self.image, text='B5', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "B5"
 
                     elif third_line_above_y < possible_symbol.y < second_line_above_y and \
                             abs(possible_symbol.y - third_line_above_y) > 3 and \
                             abs(second_line_above_y - possible_symbol.y) > 3:
+                        cv2.putText(img=self.image, text='C6', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "C6"
 
                     elif abs(third_line_above_y - possible_symbol.y) <= 3:
+                        cv2.putText(img=self.image, text='D6', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "D6"
 
                 # below staff
@@ -121,27 +142,45 @@ class Staff:
                     third_line_below_y = self.line_five.y1 + 3 * self.line_spacing
 
                     if abs(self.line_five.y1 - possible_symbol.y) <= 3:
+                        cv2.putText(img=self.image, text='D4', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "D4"
 
                     elif self.line_five.y1 < possible_symbol.y < first_line_below_y and \
                             abs(possible_symbol.y - self.line_five.y1) > 3 and \
                             abs(first_line_below_y - possible_symbol.y) > 3:
+                        cv2.putText(img=self.image, text='C4', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "C4"
 
                     elif abs(first_line_below_y - possible_symbol.y) <= 3:
+                        cv2.putText(img=self.image, text='B3', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "B3"
 
                     elif first_line_below_y < possible_symbol.y < second_line_below_y and \
                             abs(possible_symbol.y - first_line_below_y) > 3 and \
                             abs(second_line_below_y - possible_symbol.y) > 3:
+                        cv2.putText(img=self.image, text='A3', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "A3"
 
                     elif abs(second_line_below_y - possible_symbol.y) <= 3:
+                        cv2.putText(img=self.image, text='G3', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "G3"
 
                     elif second_line_below_y < possible_symbol.y < third_line_below_y and \
                             abs(possible_symbol.y - second_line_below_y) > 3 and \
                             abs(third_line_below_y - possible_symbol.y) > 3:
+                        cv2.putText(img=self.image, text='F3', org=(possible_symbol.x, possible_symbol.y - 5),
+                                    fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                                    color=(0, 0, 0), thickness=1)
                         symbol.pitch = "F3"
 
             symbol.duration = possible_symbol.set_duration()
@@ -152,48 +191,57 @@ class Staff:
 
     def match_note_between_lines_inside_staff(self, possible_note):
         if abs(possible_note.y - self.line_one.y1) <= 3:
-            # cv2.putText(img=cdstP, text='MI', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='E5', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "E5"
 
         elif abs(possible_note.y - self.line_two.y1) <= 3:
-            # cv2.putText(img=cdstP, text='DO', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='C5', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "C5"
 
         elif abs(possible_note.y - self.line_three.y1) <= 3:
-            # cv2.putText(img=cdstP, text='LA', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='A4', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "A4"
 
         elif abs(possible_note.y - self.line_four.y1) <= 3:
-            # cv2.putText(img=cdstP, text='FA', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='F4', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "F4"
 
         elif abs(possible_note.y - self.line_five.y1) <= 3:
-            # cv2.putText(img=cdstP, text='RE', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='D4', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "D4"
 
     def match_note_on_lines_inside_staff(self, possible_note):
         if self.line_one.y1 < possible_note.y < self.line_two.y1:
-            # cv2.putText(img=cdstP, text='RE', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='D5', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "D5"
 
         elif self.line_two.y1 < possible_note.y < self.line_three.y1:
-            # cv2.putText(img=cdstP, text='SI', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='B4', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "B4"
         elif self.line_three.y1 < possible_note.y < self.line_four.y1:
-            # cv2.putText(img=cdstP, text='SOL', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='G4', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "G4"
 
         elif self.line_four.y1 < possible_note.y < self.line_five.y1:
-            # cv2.putText(img=cdstP, text='MI', org=(possible_note.x, possible_note.y - 5), fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
-            #             color=(0, 0, 0), thickness=1)
+            cv2.putText(img=self.image, text='E4', org=(possible_note.x, possible_note.y - 5),
+                        fontFace=cv2.QT_FONT_NORMAL, fontScale=1,
+                        color=(0, 0, 0), thickness=1)
             return "E4"
 
     def set_alterations(self, symbol_type):

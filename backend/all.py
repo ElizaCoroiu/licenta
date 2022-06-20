@@ -5,9 +5,9 @@ import cv2
 import cv2 as cv
 import numpy as np
 
-from symbol import Symbol
-from staff import Staff, Line
-import template_matching
+from models.symbol import Symbol
+from models.staff import Staff, Line
+from image_processing import template_matching
 
 
 def main(argv):
@@ -52,7 +52,7 @@ def main(argv):
         ]
     }
 
-    default_file = 'resources/images/mary.jpg'
+    default_file = 'resources/images/baby.jpg'
     filename = argv[0] if len(argv) > 0 else default_file
     src = cv.imread(cv.samples.findFile(filename), cv.IMREAD_GRAYSCALE)
     width = src.shape[1]

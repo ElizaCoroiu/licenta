@@ -49,7 +49,6 @@ def get_notes(default_file):
         ]
     }
 
-    # default_file = 'resources/images/mary.jpg'
     src = cv.imread(cv.samples.findFile(default_file), cv.IMREAD_GRAYSCALE)
     width = src.shape[1]
 
@@ -60,9 +59,9 @@ def get_notes(default_file):
 
     # bitwise the image background color (white should be the background)
     dst = cv2.bitwise_not(src)
-    cdst = cv.cvtColor(src, cv.COLOR_GRAY2BGR)
-    cdstP = np.copy(cdst)
+    cdstP = cv.cvtColor(src, cv.COLOR_GRAY2BGR)
     linesP = cv.HoughLinesP(dst, rho=1, theta=np.pi / 180, threshold=50, lines=None, minLineLength=150, maxLineGap=1)
+
     all_lines = []
 
     # process only staff lines ---------------------
@@ -78,7 +77,6 @@ def get_notes(default_file):
     all_lines.sort(key=lambda line: line.y1)
 
     # remove line duplicates ----------------
-
     lines_without_duplicates = []
     for i in range(len(all_lines) - 1):
         current_line = all_lines[i]
@@ -106,6 +104,8 @@ def get_notes(default_file):
         staff.line_five = staff.lines[4]
 
         staff.line_spacing = staff.line_two.y1 - staff.line_one.y1
+        staff.image = cdstP
+
         staves.append(staff)
 
     # template matching for notes, rests, alterations
@@ -113,6 +113,7 @@ def get_notes(default_file):
     rest_locations = template_matching.match(cdstP, rest_paths, 0.8, "rest")
     alterations_frames = template_matching.match(cdstP, alterations_paths, 0.7, "alteration")
 
+    # final_image = np.copy(cdstP)
     grouped_symbols_by_staff = []
 
     # append found matches to each corresponding staff / group all symbols by staff
@@ -147,9 +148,23 @@ def get_notes(default_file):
 
         staff.set_pitch_and_duration()
 
-        staff.set_alterations(staff.alterations_frames[0].symbol_type)
+        if len(staff.alterations_frames) > 0:
+            staff.set_alterations(staff.alterations_frames[0].symbol_type)
 
         staff.apply_alterations_to_notes()
 
         all_symbols.append(staff.symbols)
+
+
+    # This part is where we draw the matchings: staff lines, note names and if exist, alterations
+
+    for line in lines_without_duplicates:
+        cv2.line(staff.image, (line.x1, line.y1), (line.x2, line.y2), (0, 0, 255), 2)
+
+    if len(alterations_frames) > 0:
+        for alt in alterations_frames:
+            cv.rectangle(staff.image, (alt.x, alt.y), (alt.x + alt.w, alt.y + alt.h), (0, 0, 255), 1)
+
+    cv.imwrite('result.png', staff.image)
+
     return all_symbols

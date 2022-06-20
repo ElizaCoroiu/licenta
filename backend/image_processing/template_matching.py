@@ -37,10 +37,6 @@ def match(img, paths, threshold, template_type):
                                             symbol.symbol_type, symbol.template_type, w, h)
                     frames.append(frame)
 
-                #cv.circle(img, (pt[0], pt[1]), 5, (139, 0, 0), -1)
-
-                #cv.rectangle(img, pt[:2], (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
-
     if len(frames) > 0:
         return frames
 
