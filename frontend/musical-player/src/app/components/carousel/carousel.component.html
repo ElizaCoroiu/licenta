@@ -1,0 +1,6 @@
+<div *ngIf="thumbnails" class="carousel-container" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+    <div *ngFor="let t of thumbnails">
+      <img [src]="t.thumbnail">
+      <app-play-sound [processedImage]="t.processedValues"></app-play-sound>
+    </div>
+</div>

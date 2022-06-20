@@ -1,3 +1,5 @@
+declare var require: any
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,13 +12,17 @@ import { DragAndDropComponent } from './components/drag-and-drop/drag-and-drop.c
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { PlaySoundComponent } from './components/play-sound/play-sound.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    DragAndDropComponent
+    DragAndDropComponent,
+    PlaySoundComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +31,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     NgxDropzoneModule,
     HttpClientModule,
-    FlexLayoutModule 
+    FlexLayoutModule,
+    IvyCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

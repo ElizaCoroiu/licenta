@@ -17,12 +17,30 @@ export class RestApiService {
     }),
   };
 
-  createFile(file: any): Observable<File> {
+  createFile(file: any): Observable<any> {
     return this.http
-      .post<File>(
-        this.apiURL + '/file',
-        file
+      .post(
+        this.apiURL + '/file', file
       )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getFile(filePath: string): Observable<any> {
+    return this.http
+      .get(this.apiURL + '/image/' + filePath, {responseType: 'blob'}
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getFilePaths(): Observable<any> {
+    return this.http
+      .get(this.apiURL + '/filepaths')
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getProcessedImage(fileName: string): Observable<any> {
+    return this.http
+      .get(this.apiURL + '/processed_image/' + fileName)
       .pipe(retry(1), catchError(this.handleError));
   }
 

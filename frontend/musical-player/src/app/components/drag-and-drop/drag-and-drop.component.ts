@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { RestApiService } from 'src/app/services/rest-api.service';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-drag-and-drop',
@@ -10,9 +11,10 @@ import { RestApiService } from 'src/app/services/rest-api.service';
 export class DragAndDropComponent implements OnInit {
   isVisible: boolean = false;
   title = 'dropzone';
+  thumbnail: any
 
-
-  constructor(public restApi: RestApiService) { }
+  constructor(public restApi: RestApiService, private sanitizer: DomSanitizer,
+              public uploadService: UploadService) { }
 
   ngOnInit(): void {
   }
@@ -24,9 +26,13 @@ export class DragAndDropComponent implements OnInit {
   onSelect(event: any){
     const formData = new FormData();
     formData.append("file", event.addedFiles[0]);
-    
-    this.restApi.createFile(formData).subscribe((data: {}) => {
-      console.log(data);
+
+    this.restApi.createFile(formData).subscribe(() => {
+      this.uploadService.imageReceived();
     })
+  }
+
+  receive(event: any) {
+    console.log(event)
   }
 }

@@ -1,10 +1,25 @@
 .drag-and-drop-button-container {
-  padding: 10px;
+  padding: 0 0 30px;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(6px);
+    z-index: -1;
+  }
 }
 
 .add-icon {
   color: white;
-  font-size: 30px;
+  font-size: 40px;
   margin-top: -10px;
 }
 
@@ -12,12 +27,19 @@
   color: #fff;
   font-size: 22px;
   margin-bottom: 20px;
+  font-size: 30px;
+  padding: 30px 0 0;
+}
+
+.upload-button {
+  background-color: darkcyan;
 }
 
 ngx-dropzone {
-  border: 1px dashed #D3D3D3;
+  border: 1px #D3D3D3;
   height: 200px;
   justify-content: center;
+  background-color: transparent;
 }
 
 ngx-dropzone ngx-dropzone-preview {
@@ -25,17 +47,27 @@ ngx-dropzone ngx-dropzone-preview {
   min-width: 50px !important;
   min-height: 50px !important;
   background-image: none;
-  background-color: pink;
+  background-color: transparent;
+  border: 0.5px dashed gray;
+  font-family: 'Nanum Gothic', sans-serif;
+  color: #fff;
+  font-size: 18px;
+}
+
+ngx-dropzone-remove-badge {
+  opacity: 0.5;
 }
 
 div.drag-and-drop-container {
-  margin-top: 300px;
+  margin-top: 80px;
   width: 100%;
+  font-family: 'Oleo Script', cursive;
 
   mat-card.basic-card {
-    background-color: palevioletred;
-    max-width: 550px;
-    margin:0;
+    width: 900px;
+    margin: 0;
     padding:0 !important;
+    background-color: transparent;
+    font-family: 'Oleo Script';
   }
 }
